@@ -3,7 +3,6 @@
 const byte ROWS = 3;
 const byte COLUMNS = 3;
 
-//test stuff
 
 byte cols[COLUMNS] = { 5, 6, 7 };
 byte rows[ROWS] = { 2, 3, 4 };
