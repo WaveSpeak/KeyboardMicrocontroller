@@ -10,7 +10,7 @@ byte rows[ROWS] = { 2, 3, 4 };
 
 String keys[COLUMNS][ROWS] = {
   { "3", "6", "9" },
-  { "2", "If you've pressed this number, you eat peanut butter off toes...", "8" },
+  { "2", "5", "8" },
   { "1", "4", "7" }
 };
 
