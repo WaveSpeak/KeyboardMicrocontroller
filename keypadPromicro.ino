@@ -6,18 +6,17 @@ const bool DEBUG = true;
 const int MAX_KEYS_PRESSED = 21;
 
 
-bool KEYS_PRESSED[MAX_KEYS_PRESSED] = { 0 };
 
 //Must measure current FROM ROWS to COLUMNS due to the diode configuation.
 byte cols[COLUMNS] = { 2, 3, 4, 5, 6, 7, 8 };
 byte rows[ROWS] = { 9, 10, 16 };
 
+bool KEYS_PRESSED[ROWS][COLUMNS] = { { 0 } };
 
-
-byte keys[ROWS][COLUMNS] = {
-  { 1, 2, 3, 4, 5, 6, 7 },
-  { 8, 9, 10, 11, 12, 13, 14 },
-  { 15, 16, 17, 18, 19, 20, 21 }
+char keys[ROWS][COLUMNS] = {
+  { 'q', 'w', 'e', 'r', 't', 'y', 'u'},
+  { 'a', 's', 'd', 'f', 'g', 'h', 'j'},
+  { 'z', 'x', 'c', 'v', 'b', 'n', 'm'}
 };
 
 void setupKeyMatrix() {
@@ -38,12 +37,11 @@ void scanKeyMatrix() {
       digitalWrite(rows[r], LOW);
 
       if (digitalRead(cols[c]) == 0){
-        KEYS_PRESSED[keys[r][c]-1] = true;
+        KEYS_PRESSED[r][c] = true;
       }
       else{
-        KEYS_PRESSED[keys[r][c]-1] = false;
+        KEYS_PRESSED[r][c] = false;
       }
-
       digitalWrite(rows[r], HIGH);
     }
   }
@@ -62,7 +60,16 @@ void setup() {
 // Loop is executed repeatedly
 void loop() {
   scanKeyMatrix();
-  for (int i = 0; i < MAX_KEYS_PRESSED; i++)
-    Serial.print(KEYS_PRESSED[i] ? "true " : "false ");
+  for (int r = 0; r < ROWS; r++)
+  {
+    for (int c = 0; c < COLUMNS; c++)
+    {
+      if (KEYS_PRESSED[r][c])
+      {
+        Keyboard.write(keys[r][c]);
+        delay(150);
+      }
+    }
+  }
   Serial.println();
 }
